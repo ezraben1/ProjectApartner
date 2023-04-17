@@ -7,7 +7,7 @@ from uuid import uuid4
 from business.validators import validate_file_size
 from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.utils.translation import gettext as _
-
+from django import apps
 class CustomUser(AbstractUser):
     OWNER = 'owner'
     RENTER = 'renter'
