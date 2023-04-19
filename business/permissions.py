@@ -26,9 +26,10 @@ class IsOwner(permissions.BasePermission):
     
 class IsApartmentOwner(permissions.BasePermission):
     def has_permission(self, request, view):
-        return request.user.is_authenticated
+        return request.user.is_authenticated and request.user.user_type == "owner"
     
     def has_object_permission(self, request, view, obj):
         if request.user.is_superuser:
             return True
         return obj.owner == request.user
+

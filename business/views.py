@@ -1,5 +1,5 @@
 from django.db.models.aggregates import Count
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import permissions, status
 from rest_framework.filters import OrderingFilter, SearchFilter
@@ -10,11 +10,10 @@ from .models import Apartment, Contract, CustomUser, Review, Room, RoomImage, Bi
 from .permissions import IsApartmentOwner
 from . import serializers
 from business.pagination import DefaultPagination
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth import authenticate, login
+from django.middleware import csrf
 from django.conf import settings
-import jwt
+from rest_framework_simplejwt.tokens import RefreshToken
+from django.contrib.auth import authenticate
 from rest_framework.views import APIView
 
 
@@ -178,42 +177,39 @@ class ReviewViewSet(ModelViewSet):
         else:
             return {}
 
-class TokenRefreshView(APIView):
-    def post(self, request):
-        refresh_token = request.COOKIES.get('refresh_token')
-        if not refresh_token:
-            return Response({'error': 'Refresh token not found'}, status=400)
-        try:
-            payload = jwt.decode(refresh_token, settings.SECRET_KEY, algorithms=['HS256'])
-        except jwt.ExpiredSignatureError:
-            return Response({'error': 'Refresh token has expired'}, status=400)
-        except jwt.InvalidTokenError:
-            return Response({'error': 'Invalid refresh token'}, status=400)
+def get_tokens_for_user(user):
+    refresh = RefreshToken.for_user(user)
+    return {
+        'refresh': str(refresh),
+        'access': str(refresh.access_token),
+    }
 
-        user_id = payload.get('user_id')
-        access_token = jwt.encode({'user_id': user_id}, settings.SECRET_KEY, algorithm='HS256')
-        response = Response({'success': True})
-        response.set_cookie(key='access_token', value=access_token, httponly=True, secure=True, samesite='Strict', max_age=settings.ACCESS_TOKEN_EXPIRATION)
-        return response
-
-def user_login(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(request, username=username, password=password)
-
+class LoginView(APIView):
+    def post(self, request, format=None):
+        data = request.data
+        response = Response()        
+        username = data.get('username', None)
+        password = data.get('password', None)
+        user = authenticate(username=username, password=password)
         if user is not None:
-            login(request, user)
-            access_token = jwt.encode({'user_id': user.id}, settings.SECRET_KEY, algorithm='HS256')
-            refresh_token = jwt.encode({'user_id': user.id}, settings.SECRET_KEY, algorithm='HS256')
-            response = redirect('/home')
-            response.set_cookie(key='access_token', value=access_token, httponly=True, secure=True, samesite='Strict', max_age=settings.ACCESS_TOKEN_EXPIRATION)
-            response.set_cookie(key='refresh_token', value=refresh_token, httponly=True, secure=True, samesite='Strict', max_age=settings.REFRESH_TOKEN_EXPIRATION)
-            return response
+            if user.is_active:
+                data = get_tokens_for_user(user)
+                response.set_cookie(
+                    key = settings.SIMPLE_JWT['AUTH_COOKIE'], 
+                    value = data["access"],
+                    expires = settings.SIMPLE_JWT['ACCESS_TOKEN_LIFETIME'],
+                    secure = settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
+                    httponly = settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
+                    samesite = settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
+                )
+                csrf.get_token(request)
+                response.data = {"Success" : "Login successfully","data":data}
+                return response
+            else:
+                return Response({"No active" : "This account is not active!!"}, status=status.HTTP_404_NOT_FOUND)
         else:
-            return JsonResponse({'success': False, 'error': 'Invalid credentials'})
-    
-    return render(request, 'login.html')
+            return Response({"Invalid" : "Invalid username or password!!"}, status=status.HTTP_404_NOT_FOUND)
+
 
 
 

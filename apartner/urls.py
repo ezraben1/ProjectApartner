@@ -18,17 +18,14 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 import debug_toolbar
-
-from business.views import CustomUserViewSet
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 admin.site.site_header = 'Apartner Admin'
 admin.site.index_title = 'Admin'
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('home/', include(('business.urls', 'business'), namespace='business')),
+    path('home/', include(('business.urls', 'business'), namespace='business'),name = 'business'),
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.jwt')),
     path('__debug__/', include(debug_toolbar.urls)),
