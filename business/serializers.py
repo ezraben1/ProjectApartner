@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from .models import Room, Apartment, RoomImage, Review, CustomUser, Contract, Bill
 from rest_framework import serializers
-from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 
 class ApartmentImageSerializer(serializers.ModelSerializer):
@@ -95,9 +94,6 @@ class ContractSerializer(serializers.ModelSerializer):
         fields = ['id', 'room_id', 'apartment_id', 'start_date', 'end_date', 'deposit_amount', 'rent_amount']
 
 class BillSerializer(serializers.ModelSerializer):
-    apartment = serializers.StringRelatedField()
-    created_by = serializers.StringRelatedField()
-
     class Meta:
         model = Bill
         fields = ['id', 'apartment', 'bill_type', 'amount', 'date', 'created_by', 'created_at', 'document']

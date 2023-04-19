@@ -1,5 +1,5 @@
 from rest_framework import permissions
-
+from .models import Apartment
 
 class IsAdminOrReadOnly(permissions.BasePermission):
     def has_permission(self, request, view):
@@ -33,3 +33,23 @@ class IsApartmentOwner(permissions.BasePermission):
             return True
         return obj.owner == request.user
 
+from rest_framework.permissions import IsAuthenticated
+
+class IsApartmentOwnerOrReadOnly(permissions.BasePermission):
+    """
+    Custom permission to only allow owners of an apartment to edit or delete rooms,
+    but allow any authenticated user to view the rooms.
+    """
+    def has_permission(self, request, view):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        else:
+            apartment = Apartment.objects.get(id=view.kwargs['apartment_pk'])
+            return apartment.owner == request.user
+    
+    def has_object_permission(self, request, view, obj):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        else:
+            apartment = obj.apartment
+            return apartment.owner == request.user

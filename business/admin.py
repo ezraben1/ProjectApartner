@@ -21,7 +21,7 @@ class RoomAdmin(admin.ModelAdmin):
     autocomplete_fields = ['apartment']
     inlines = [RoomImageInline]
     list_display = ['id','apartment_address','size', 'price_per_month',
-                    'description']
+                    'description','renter']
     list_editable = ['price_per_month']
     list_filter = ['apartment']
     list_per_page = 10
@@ -38,7 +38,7 @@ class RoomAdmin(admin.ModelAdmin):
 
 @admin.register(models.Apartment)
 class ApartmentAdmin(admin.ModelAdmin):
-    list_display = ['id', 'address', 'rooms_count']
+    list_display = ['id', 'address', 'rooms_count','owner']
     search_fields = ['address']
 
     @admin.display(ordering='rooms_count')
