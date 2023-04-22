@@ -45,10 +45,11 @@ INSTALLED_APPS = [
     'rest_framework_nested',
     'djoser',
     'debug_toolbar',
-    'business',
     'core',
     'owner',
-    'main_page'
+    'main_page',
+    'searcher',
+    'renter',
 ]
 
 MIDDLEWARE = [
@@ -110,7 +111,7 @@ DATABASES = {
     }
 }
 
-AUTH_USER_MODEL = 'business.CustomUser'
+AUTH_USER_MODEL = 'core.CustomUser'
 
 
 # Password validation
@@ -159,7 +160,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     'COERCE_DECIMAL_TO_STRING': False,
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'business.authentication.CustomAuthentication',
+        'core.authentication.CustomAuthentication',
     ),
 }
 
@@ -200,7 +201,7 @@ SIMPLE_JWT = {
   'AUTH_COOKIE_SAMESITE': 'Lax',  # Whether to set the flag restricting cookie leaks on cross-site requests. This can be 'Lax', 'Strict', or None to disable the flag.
 }
 
-JWT_AUTH_USER_MODEL = 'business.CustomUser'
+JWT_AUTH_USER_MODEL = 'core.CustomUser'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'localhost'

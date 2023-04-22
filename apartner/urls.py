@@ -28,8 +28,10 @@ router = routers.DefaultRouter()
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('main_page.urls')),
-    path('business/', include(('business.urls', 'business'), namespace='business'),name = 'business'),
+    path('core/', include(('core.urls', 'core'), namespace='core'),name = 'core'),
     path('owner/', include(('owner.urls', 'owner'), namespace='owner'),name = 'owner'),
+    path('searcher/', include(('searcher.urls', 'searcher'), namespace='searcher'),name = 'searcher'),
+    path('renter/', include(('renter.urls', 'renter'), namespace='renter'),name = 'renter'),
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.jwt')),
     path('__debug__/', include(debug_toolbar.urls)),

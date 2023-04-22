@@ -8,7 +8,7 @@ from . import views
 class APIRoot(APIView):
     def get(self, request, format=None):
         return Response({
-            'business': request.build_absolute_uri('/business/'),
+            'core': request.build_absolute_uri('/core/'),
             'owner': request.build_absolute_uri('/owner/'),
             'search': request.build_absolute_uri('/searcher/'),
             'renter': request.build_absolute_uri('/renter/'),
