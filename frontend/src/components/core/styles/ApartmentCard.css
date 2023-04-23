@@ -1,0 +1,38 @@
+.apartment-card {
+    border: 1px solid #ccc;
+    padding: 16px;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease-in-out;
+
+  }
+  
+  .apartment-card__title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  
+  .apartment-card__description {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 16px;
+  }
+  
+  .apartment-card__info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .apartment-card__price {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  .apartment-card__date {
+    font-size: 14px;
+    color: #666;
+  }
+  

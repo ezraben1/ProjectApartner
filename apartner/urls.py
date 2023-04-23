@@ -20,6 +20,7 @@ from django.urls import path, include
 import debug_toolbar
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework_nested import routers
+from django.views.generic import TemplateView
 
 admin.site.site_header = 'Apartner Admin'
 admin.site.index_title = 'Admin'
@@ -27,9 +28,6 @@ router = routers.DefaultRouter()
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-
-    #todo:
-    # path('', views.getRoutes, name="routes"),
     path('', include('main_page.urls')),
     path('core/', include(('core.urls', 'core'), namespace='core'),name = 'core'),
     path('owner/', include(('owner.urls', 'owner'), namespace='owner'),name = 'owner'),

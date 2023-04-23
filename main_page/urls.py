@@ -14,6 +14,7 @@ class APIRoot(APIView):
             'search': request.build_absolute_uri('/searcher/'),
             'renter': request.build_absolute_uri('/renter/'),
             'login': request.build_absolute_uri('/login/'),
+            
         })
 
 
@@ -25,4 +26,6 @@ urlpatterns = [
                   # path('', TemplateView.as_view(template_name='index.html')),
                   # path('api', APIRoot.as_view(), name='api-root')),
                   path('', APIRoot.as_view(), name='api-root'),
+                  path('react/', views.react_view, name='react'),
+
               ] + router.urls

@@ -1,0 +1,30 @@
+.apartment-list {
+    margin: 0 auto;
+    max-width: 600px;
+  }
+  
+  .apartment-list h1 {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .apartment-list li {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    border: 1px solid #ccc;
+  }
+  
+  .apartment-list li h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .apartment-list li p {
+    margin-bottom: 0.5rem;
+  }
+  
+  .apartment-list li p:last-child {
+    margin-bottom: 0;
+  }
+  
