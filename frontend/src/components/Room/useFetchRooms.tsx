@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Room } from '../../../types';
+import { Room } from '../../types';
 
 interface FetchRoomsResult {
   data: Room[] | null;

@@ -6,9 +6,13 @@ import Profile from './pages/Profile';
 import OwnerPage from './pages/Owner/OwnerPage';
 import MyApartments from './components/Apartment/MyApartments';
 import OwnerRoutes from './pages/Owner/OwnerRoutes';
-import MyRooms from './components/Apartment/Room/MyRooms';
+import MyRooms from './components/Room/MyRooms';
 import Layout from './layout/Layout';
 import MinimalExample from './pages/MinimalExample';
+import MyContracts from './components/Contract/MyContracts';
+import SingleContract from './components/Contract/SingleContract';
+import SingleApartment from './components/Apartment/SingleApartment';
+import SingleRoom from './components/Room/SingleRoom';
 
 function App() {
   const [currentUser, setCurrentUser] = useState<any>(null);
@@ -27,7 +31,14 @@ function App() {
           <Route path="/owner" element={<OwnerPage />} />
           <Route path="/owner/*" element={<OwnerRoutes />} />
           <Route path="/owner/my-apartments" element={<MyApartments />} />
+          <Route path="/owner/my-apartments/:id" element={<SingleApartment />} />
+          <Route path="/owner/my-apartments/:id/room/:id" element={<SingleRoom />} />
           <Route path="/owner/my-rooms" element={<MyRooms />} />
+          <Route path="/owner/my-rooms/:id" element={<SingleRoom />} />
+          <Route path="/owner/my-contracts" element={<MyContracts />} />
+          <Route path="/owner/contracts/:id" element={<SingleContract />} />+
+          
+
           <Route path="/test" element={<MinimalExample />} />
 
         </Routes>
