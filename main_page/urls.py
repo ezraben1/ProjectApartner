@@ -22,8 +22,5 @@ router = routers.DefaultRouter()
 router.register("login", login.views.LoginViewSet, basename="login")
 
 urlpatterns = [
-    # todo: ben
-    # path('', TemplateView.as_view(template_name='index.html')),
-    # path('api', APIRoot.as_view(), name='api-root')),
     path("", APIRoot.as_view(), name="api-root"),
 ] + router.urls

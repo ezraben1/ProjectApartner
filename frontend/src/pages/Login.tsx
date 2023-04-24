@@ -1,11 +1,13 @@
+// src/pages/Login.tsx
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Outlet } from "react-router-dom";
 import auth from "../auth";
 import Cookies from 'js-cookie';
 import api from "../api";
 
+
 interface LoginProps {
-  onLoginSuccess: () => void;
+  onLoginSuccess: (token: string) => void;
 }
 
 function Login({ onLoginSuccess }: LoginProps) {
@@ -25,10 +27,11 @@ function Login({ onLoginSuccess }: LoginProps) {
         const data = await response.json();
         localStorage.setItem("access_token", data.access);
         Cookies.set('access_token', data.access); // set the access_token in the cookies
-        onLoginSuccess();
+        onLoginSuccess(data.access);
   
         // fetch user details and set the logged in user state
         const userResponse = await api.getUserDetails();
+        console.log("userResponse:", userResponse); // add this line to log the userResponse object
         if (userResponse.ok) {
           const user = await userResponse.json();
           setLoggedInUser(user);
@@ -39,10 +42,11 @@ function Login({ onLoginSuccess }: LoginProps) {
         setError("Invalid credentials");
       }
     } catch (error) {
+      console.log("login error:", error); // add this line to log the error object
       setError("An error occurred while logging in");
     }
   };
-
+  
   return (
     <div>
       {loggedInUser && <p>Welcome {loggedInUser.username}!</p>}
