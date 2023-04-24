@@ -1,5 +1,4 @@
-import { Link } from 'react-router-dom';
-import MyApartments from './MyApartments';
+import { Link,Outlet } from 'react-router-dom';
 
 const OwnerPage: React.FC = () => {
   return (
@@ -11,14 +10,17 @@ const OwnerPage: React.FC = () => {
             <Link to="/login">Login</Link>
           </li>
           <li>
-            <Link to="/profile">Profile</Link>
+            <Link to="/me">Profile</Link>
           </li>
           <li>
-            <Link to="/my-apartments">My Apartments</Link>
+            <Link to="/owner/my-apartments">My Apartments</Link>
+          </li>
+          <li>
+            <Link to="/owner/my-rooms">My Rooms</Link>
           </li>
         </ul>
       </nav>
-      <MyApartments />
+      <Outlet /> 
     </div>
   );
 }

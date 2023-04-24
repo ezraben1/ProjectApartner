@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import api from "../api";
-import { getCookie } from "../utils";
+import api from "../utils/api";
 
 interface User {
   id: number;

@@ -1,9 +1,9 @@
 // src/pages/Login.tsx
 import { useState } from "react";
 import { useNavigate, Outlet } from "react-router-dom";
-import auth from "../auth";
+import auth from "../utils/auth";
 import Cookies from 'js-cookie';
-import api from "../api";
+import api from "../utils/api";
 
 
 interface LoginProps {

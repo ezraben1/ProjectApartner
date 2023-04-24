@@ -1,15 +1,14 @@
 // src/Routes.tsx
 import { Route, BrowserRouter, Routes } from "react-router-dom";
-import HomePage from "./pages/HomePage";
+import HomePage from "./pages/Home/HomePage";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
-import Owner from "./pages/OwnerPage";
-import Searcher from "./pages/SearcherPage";
-import Renter from "./pages/RenterPage";
-import { useUserContext } from "./UserContext";
+import OwnerRoutes from "./pages/Owner/OwnerRoutes"; // Add this import
+import Searcher from "./pages/Searcher/SearcherPage";
+import Renter from "./pages/Renter/RenterPage";
+import { useUserContext } from "./utils/UserContext";
 
 function AppRoutes() {
-  // Add this line to get the currentUser from the UserContext
   const { currentUser } = useUserContext();
 
   return (
@@ -18,7 +17,7 @@ function AppRoutes() {
         <Route path="/" element={<HomePage currentUser={currentUser} />} />
         <Route path="/login" element={<Login onLoginSuccess={() => {}} />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/owner/*" element={<Owner />} />
+        <Route path="/owner/*" element={<OwnerRoutes />} />
         <Route path="/searcher" element={<Searcher />} />
         <Route path="/renter" element={<Renter />} />
       </Routes>

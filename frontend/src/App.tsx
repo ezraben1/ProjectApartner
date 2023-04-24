@@ -1,32 +1,37 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from './pages/Login';
-import Home from './pages/HomePage';
+import Home from './pages/Home/HomePage';
 import Profile from './pages/Profile';
-import OwnerPage from './pages/OwnerPage';
-import MyApartments from './pages/MyApartments';
+import OwnerPage from './pages/Owner/OwnerPage';
+import MyApartments from './components/Apartment/MyApartments';
+import OwnerRoutes from './pages/Owner/OwnerRoutes';
+import MyRooms from './components/Apartment/Room/MyRooms';
+import Layout from './layout/Layout';
+import MinimalExample from './pages/MinimalExample';
 
-interface AppProps {
-  onLoginSuccess: (token: string | undefined) => void;
-}
-
-function App({ onLoginSuccess }: AppProps) {
+function App() {
   const [currentUser, setCurrentUser] = useState<any>(null);
 
   const handleLoginSuccess = (token?: string) => {
     setCurrentUser(token);
-    onLoginSuccess(token);
   };
 
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Home currentUser={currentUser} />} />
-        <Route path="/login" element={<Login onLoginSuccess={handleLoginSuccess} />} />
-        <Route path="/me" element={<Profile />} />
-        <Route path="/owner" element={<OwnerPage />} />
-        <Route path="/owner/my-apartments" element={<MyApartments />} />
-      </Routes>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<Home currentUser={currentUser} />} />
+          <Route path="/login" element={<Login onLoginSuccess={handleLoginSuccess} />} />
+          <Route path="/me" element={<Profile />} />
+          <Route path="/owner" element={<OwnerPage />} />
+          <Route path="/owner/*" element={<OwnerRoutes />} />
+          <Route path="/owner/my-apartments" element={<MyApartments />} />
+          <Route path="/owner/my-rooms" element={<MyRooms />} />
+          <Route path="/test" element={<MinimalExample />} />
+
+        </Routes>
+      </Layout>
     </Router>
   );
 }

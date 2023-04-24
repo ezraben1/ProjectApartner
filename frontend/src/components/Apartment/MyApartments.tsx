@@ -1,21 +1,17 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Apartment, Room } from '../types';
+import { Apartment, Room } from '../../types';
+import { useAuthorizedData } from '../../utils/useAuthorizedData';
 
 const MyApartments: React.FC = () => {
   const [apartments, setApartments] = useState<Apartment[]>([]);
+  const [apartmentData, status] = useAuthorizedData<Apartment[]>('/owner/owner-apartments/');
+
 
   useEffect(() => {
-    const fetchApartments = async () => {
-      try {
-        const response = await axios.get('http://127.0.0.1:8000/core/test/');
-        setApartments(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchApartments();
-  }, []);
+    if (status === 'idle' && apartmentData) {
+      setApartments(apartmentData);
+    }
+  }, [apartmentData, status]);
 
   return (
     <div>
