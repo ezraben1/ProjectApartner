@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import RoomList from './RoomList';
-import { useAuthorizedData } from '../../../utils/useAuthorizedData';
-import { Room } from '../../../types';
+import { useAuthorizedData } from '../../utils/useAuthorizedData';
+import { Room } from '../../types';
+
 
 const MyRooms: React.FC = () => {
   const [rooms, setRooms] = useState<Room[]>([]);
@@ -16,7 +17,7 @@ const MyRooms: React.FC = () => {
   return (
     <div>
       <h1>My Rooms</h1>
-      <RoomList rooms={rooms} />
+      <RoomList rooms={rooms} apartmentId={null} />
     </div>
   );
 };

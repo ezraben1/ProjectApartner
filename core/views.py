@@ -190,7 +190,6 @@ class RoomViewSet(ModelViewSet):
         if user.is_authenticated:
             if user.user_type == "owner":
                 return Room.objects.filter(apartment__owner=self.request.user)
-
         return Room.objects.prefetch_related("images").all()
 
 
