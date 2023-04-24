@@ -1,3 +1,9 @@
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> Stashed changes
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom';
 import OwnerRoutes from './components/owner/Owner';
@@ -38,5 +44,69 @@ const App: React.FC = () => {
     </Router>
   );
 };
+<<<<<<< Updated upstream
 
+=======
+=======
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Login from "./components/Login";
+import Home from "./components/Home";
+import Profile from "./components/Profile"
+=======
+import React, { useState } from 'react';
+=======
+import { useState } from 'react';
+>>>>>>> c73cfed (added few pages for owner, also bootsrap design!)
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Login from './pages/Login';
+import Home from './pages/Home/HomePage';
+import Profile from './pages/Profile';
+import OwnerPage from './pages/Owner/OwnerPage';
+import MyApartments from './components/Apartment/MyApartments';
+import OwnerRoutes from './pages/Owner/OwnerRoutes';
+import MyRooms from './components/Apartment/Room/MyRooms';
+import Layout from './layout/Layout';
+import MinimalExample from './pages/MinimalExample';
+
+<<<<<<< HEAD
+>>>>>>> 2bfd8bb (hi shahaf)
+interface AppProps {
+  onLoginSuccess: (token: string | undefined) => void;
+}
+
+function App({ onLoginSuccess }: AppProps) {
+=======
+function App() {
+>>>>>>> c73cfed (added few pages for owner, also bootsrap design!)
+  const [currentUser, setCurrentUser] = useState<any>(null);
+
+  const handleLoginSuccess = (token?: string) => {
+    setCurrentUser(token);
+  };
+
+  return (
+    <Router>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<Home currentUser={currentUser} />} />
+          <Route path="/login" element={<Login onLoginSuccess={handleLoginSuccess} />} />
+          <Route path="/me" element={<Profile />} />
+          <Route path="/owner" element={<OwnerPage />} />
+          <Route path="/owner/*" element={<OwnerRoutes />} />
+          <Route path="/owner/my-apartments" element={<MyApartments />} />
+          <Route path="/owner/my-rooms" element={<MyRooms />} />
+          <Route path="/test" element={<MinimalExample />} />
+
+        </Routes>
+      </Layout>
+    </Router>
+  );
+}
+
+<<<<<<< HEAD
+>>>>>>> 67afe1c (Now we have login system in react!)
+
+=======
+>>>>>>> 2bfd8bb (hi shahaf)
+>>>>>>> Stashed changes
 export default App;

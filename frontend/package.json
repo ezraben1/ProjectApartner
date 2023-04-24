@@ -13,8 +13,18 @@
     "@types/react-router-dom": "^5.3.3",
     "axios": "^1.3.6",
     "bootstrap": "^5.2.3",
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+=======
+    "axios": "^1.3.6",
+>>>>>>> 67afe1c (Now we have login system in react!)
+=======
+>>>>>>> c73cfed (added few pages for owner, also bootsrap design!)
+>>>>>>> Stashed changes
     "js-cookie": "^3.0.4",
     "react": "^18.2.0",
+    "react-bootstrap": "^2.7.4",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.10.0"
   },
