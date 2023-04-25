@@ -1,5 +1,5 @@
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 from .models import Contract, CustomUser, Review, Room, RoomImage, Bill, Apartment
 from . import serializers
 from rest_framework import permissions
@@ -10,10 +10,20 @@ from rest_framework import permissions, status
 from rest_framework.filters import OrderingFilter, SearchFilter
 from core.filters import RoomFilter
 from core.pagination import DefaultPagination
+<<<<<<< HEAD
 from core.permissions import IsApartmentOwner, IsAuthenticated, IsSearcher
+=======
+from core.permissions import (
+    IsApartmentOwner,
+    IsAuthenticated,
+    IsOwnerOrReadOnly,
+    IsSearcher,
+)
+>>>>>>> d0724f7 (moreChanges to the login, create delete,)
 from django.core.mail import send_mail
 from django.shortcuts import redirect
 from django.urls import reverse
+from rest_framework.exceptions import ValidationError
 
 
 class ApartmentViewSet(ModelViewSet):
@@ -88,6 +98,18 @@ class ApartmentViewSet(ModelViewSet):
         serializer.save(owner=self.request.user)
 
 
+class PublicRoomViewSet(ReadOnlyModelViewSet):
+    serializer_class = serializers.RoomSerializer
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filterset_class = RoomFilter
+    pagination_class = DefaultPagination
+    search_fields = ["address", "size"]
+    ordering_fields = ["price_per_month"]
+
+    def get_queryset(self):
+        return Room.objects.prefetch_related("images").all()
+
+
 class RoomViewSet(ModelViewSet):
     serializer_class = serializers.RoomSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
@@ -109,15 +131,15 @@ class RoomViewSet(ModelViewSet):
             "contact_owner",
             "room_contracts",
         ]:
-            permission_classes = [permissions.IsAuthenticated, IsApartmentOwner]
+            permission_classes = [IsAuthenticated, IsApartmentOwner]
         elif (
             self.action == "sign_contract"
             or self.action == "contact_owner"
             or self.action == "room_contracts"
         ):
-            permission_classes = [permissions.IsAuthenticated, IsSearcher]
+            permission_classes = [IsAuthenticated, IsSearcher]
         else:
-            permission_classes = [permissions.AllowAny]
+            permission_classes = [IsAuthenticated, IsApartmentOwner]
         return [permission() for permission in permission_classes]
 
     @action(
@@ -190,7 +212,9 @@ class RoomViewSet(ModelViewSet):
         if user.is_authenticated:
             if user.user_type == "owner":
                 return Room.objects.filter(apartment__owner=self.request.user)
-        return Room.objects.prefetch_related("images").all()
+            elif user.user_type == "searcher":
+                return Room.objects.prefetch_related("images").all()
+        return Room.objects.prefetch_related("images").filter(is_available=True)
 
 
 class RoomImageViewSet(ModelViewSet):

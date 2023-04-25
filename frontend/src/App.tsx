@@ -70,7 +70,10 @@ import MinimalExample from './pages/MinimalExample';
 import MyContracts from './components/Contract/MyContracts';
 import SingleContract from './components/Contract/SingleContract';
 import SingleApartment from './components/Apartment/SingleApartment';
-import SingleRoom from './components/Room/SingleRoom';
+import SingleRoom from './components/Room/OwnerSingleRoom';
+import SignUp from './pages/SignUp';
+import { ChakraProvider } from '@chakra-ui/react';
+import PublicSingleRoom from './components/Room/PublicSingleRoom';
 
 <<<<<<< HEAD
 >>>>>>> 2bfd8bb (hi shahaf)
@@ -89,28 +92,31 @@ function App() {
   };
 
   return (
-    <Router>
-      <Layout>
-        <Routes>
-          <Route path="/" element={<Home currentUser={currentUser} />} />
-          <Route path="/login" element={<Login onLoginSuccess={handleLoginSuccess} />} />
-          <Route path="/me" element={<Profile />} />
-          <Route path="/owner" element={<OwnerPage />} />
-          <Route path="/owner/*" element={<OwnerRoutes />} />
-          <Route path="/owner/my-apartments" element={<MyApartments />} />
-          <Route path="/owner/my-apartments/:id" element={<SingleApartment />} />
-          <Route path="/owner/my-apartments/:id/room/:id" element={<SingleRoom />} />
-          <Route path="/owner/my-rooms" element={<MyRooms />} />
-          <Route path="/owner/my-rooms/:id" element={<SingleRoom />} />
-          <Route path="/owner/my-contracts" element={<MyContracts />} />
-          <Route path="/owner/contracts/:id" element={<SingleContract />} />+
-          
+    <ChakraProvider>
+      <Router>
+        <Layout currentUser={currentUser} onLoginSuccess={handleLoginSuccess}>
+          <Routes>
+            <Route path="/" element={<Home currentUser={currentUser} />} />
+            <Route path="/login" element={<Login onLoginSuccess={handleLoginSuccess} />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/test/:id" element={<PublicSingleRoom/>} />
 
-          <Route path="/test" element={<MinimalExample />} />
+            <Route path="/me" element={<Profile />} />
+            <Route path="/owner" element={<OwnerPage />} />
+            <Route path="/owner/*" element={<OwnerRoutes />} />
+            <Route path="/owner/my-apartments" element={<MyApartments />} />
+            <Route path="/owner/my-apartments/:id" element={<SingleApartment />} />
+            <Route path="/owner/my-apartments/:id/room/:id" element={<SingleRoom />} />
+            <Route path="/owner/my-rooms" element={<MyRooms />} />
+            <Route path="/owner/my-rooms/:id" element={<SingleRoom />} />
+            <Route path="/owner/my-contracts" element={<MyContracts />} />
+            <Route path="/owner/contracts/:id" element={<SingleContract />} />
 
-        </Routes>
-      </Layout>
-    </Router>
+            <Route path="/test" element={<MinimalExample />} />
+          </Routes>
+        </Layout>
+      </Router>
+    </ChakraProvider>
   );
 }
 

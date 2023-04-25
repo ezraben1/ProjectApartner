@@ -5,7 +5,7 @@ import useFetchRooms from "../../components/Room/useFetchRooms";
 import SingleContract from "../../components/Contract/SingleContract";
 import MyContracts from "../../components/Contract/MyContracts";
 import SingleApartment from "../../components/Apartment/SingleApartment";
-import SingleRoom from "../../components/Room/SingleRoom";
+import OwnerSingleRoom from "../../components/Room/OwnerSingleRoom";
 
 //import /* Import all your owner-related components here */;
 
@@ -18,7 +18,7 @@ const OwnerRoutes = () => {
     <Routes>
       <Route path="/owner/my-apartments" element={<MyApartments />} />
       <Route path="/owner/my-apartments/:id" element={<SingleApartment />} />
-      <Route path="/owner/my-apartments/:id/room/:id" element={<SingleRoom />} />
+      <Route path="/owner/my-apartments/:id/room/:id" element={<OwnerSingleRoom />} />
 
       {/* <Route path="/owner/apartments/:apartmentId/bills/:billId" element={<OwnerBillDetail />} />
       <Route path="/owner/apartments/:apartmentId/contracts/:contractId" element={<OwnerContractDetail />} />
@@ -26,7 +26,7 @@ const OwnerRoutes = () => {
       <Route path="/owner/rooms/:roomId/create-contract" element={<OwnerCreateContract />} />
       <Route path="/owner/rooms/:roomId/contracts/:contractId" element={<OwnerRoomContractDetail />} /> */}
       <Route path="/owner/my-rooms" element={<MyRooms />} />
-      <Route path="/owner/my-rooms/id" element={<SingleRoom />} />
+      <Route path="/owner/my-rooms/id" element={<OwnerSingleRoom />} />
 
       <Route path="/owner/contracts" element={<MyContracts />} />
       <Route path="/owner/contracts/:id" element={<SingleContract />} />
