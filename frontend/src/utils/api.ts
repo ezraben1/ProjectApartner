@@ -20,6 +20,7 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+
 const post = async (url: string, data: any): Promise<Response> => {
   const response = await api.request({
     url,
@@ -66,8 +67,48 @@ const get = async (url: string, options?: any): Promise<Response> => {
   });
 };
 
+const patch = async (url: string, data: any): Promise<Response> => {
+  const response = await api.request({
+    url,
+    method: 'PATCH',
+    data,
+  });
+
+  const headers: HeadersInit = Object.entries(response.headers).reduce(
+    (acc: { [key: string]: string }, [key, value]) => {
+      acc[key] = value;
+      return acc;
+    },
+    {}
+  );
+
+  return new Response(JSON.stringify(response.data), {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
+  });
+};
+
+const remove = async (url: string): Promise<Response> => {
+  const response = await api.delete(url);
+
+  const headers: HeadersInit = Object.entries(response.headers).reduce((acc: { [key: string]: string }, [key, value]) => {
+    acc[key] = value;
+    return acc;
+  }, {});
+
+  return new Response(JSON.stringify(response.data), {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
+  });
+};
+
 export default {
   post,
   get,
   getUserDetails,
+  patch,
+  remove
 };
+

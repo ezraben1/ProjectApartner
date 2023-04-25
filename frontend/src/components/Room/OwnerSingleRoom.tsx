@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Room } from '../../types';
 import { useAuthorizedData } from '../../utils/useAuthorizedData';
-import { ListGroup } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
+import { Box, Heading, VStack, Text } from '@chakra-ui/react';
 
 const SingleRoom: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -24,14 +24,27 @@ const SingleRoom: React.FC = () => {
   }
 
   return (
-    <div>
-      <h1>Room #{room.id}</h1>
-      <p>Description: {room.description}</p>
-      <p>Size: {room.size}</p>
-      <p>Price per month: {room.price_per_month}</p>
-      <p>Has window: {room.window ? 'Yes' : 'No'}</p>
-    </div>
+    <Box>
+      <Heading as="h1" size="xl" textAlign="center" my={8}>
+        Room #{room.id}
+      </Heading>
+      <VStack spacing={3} align="start">
+        <Text>
+          <strong>Description:</strong> {room.description}
+        </Text>
+        <Text>
+          <strong>Size:</strong> {room.size}
+        </Text>
+        <Text>
+          <strong>Price per month:</strong> {room.price_per_month}
+        </Text>
+        <Text>
+          <strong>Has window:</strong> {room.window ? 'Yes' : 'No'}
+        </Text>
+      </VStack>
+    </Box>
   );
 };
 
 export default SingleRoom;
+

@@ -10,8 +10,6 @@ const auth = {
   login: async ({ username, password }: LoginParams): Promise<Response> => {
     const response = await api.post('/login/', { username, password });
 
-    console.log("All cookies: ", document.cookie);
-
     const headers: HeadersInit = Object.entries(response.headers).reduce((acc: { [key: string]: string }, [key, value]) => {
       acc[key] = value;
       return acc;
@@ -25,6 +23,12 @@ const auth = {
       statusText: response.statusText,
       headers,
     });
+  },
+  logout: async (): Promise<void> => {
+    // Remove the access_token from both cookies and localStorage
+    Cookies.remove('access_token');
+    localStorage.removeItem('access_token');
+    console.log('deleted')
   },
 };
 
