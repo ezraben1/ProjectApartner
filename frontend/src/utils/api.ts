@@ -21,7 +21,6 @@ const api: AxiosInstance = axios.create({
 
 api.interceptors.request.use((config) => {
   const accessToken = Cookies.get('access_token');
-  console.log(accessToken);
   if (accessToken) {
     config.headers.Authorization = `Bearer ${accessToken}`;
   }
@@ -105,7 +104,9 @@ const remove = async (url: string): Promise<Response> => {
     return acc;
   }, {});
 
-  return new Response(JSON.stringify(response.data), {
+  const body = response.data ? JSON.stringify(response.data) : null;
+
+  return new Response(body, {
     status: response.status,
     statusText: response.statusText,
     headers,

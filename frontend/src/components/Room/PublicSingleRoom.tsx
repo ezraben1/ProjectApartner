@@ -4,10 +4,10 @@ import { useAuthorizedData } from '../../utils/useAuthorizedData';
 import { useParams } from 'react-router-dom';
 import { Box, Heading, VStack, Text } from '@chakra-ui/react';
 
-const SingleRoom: React.FC = () => {
+const PublicSingleRoom: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [room, setRoom] = useState<Room | null>(null);
-  const [roomData, status] = useAuthorizedData<Room>(`/test/${id}/`);
+  const [roomData, status] = useAuthorizedData<Room>(`core/feed/${id}/`);
 
   useEffect(() => {
     if (status === 'idle' && roomData) {
@@ -46,5 +46,5 @@ const SingleRoom: React.FC = () => {
   );
 };
 
-export default SingleRoom;
+export default PublicSingleRoom;
 

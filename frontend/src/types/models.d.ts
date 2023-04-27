@@ -73,6 +73,7 @@ export interface CustomUser {
   }
   
   export interface RoomImage {
+    url: string | undefined;
     id: number;
     room: Room;
     image: string; // URL or Base64 encoded string

@@ -107,7 +107,7 @@ class PublicRoomViewSet(ReadOnlyModelViewSet):
     ordering_fields = ["price_per_month"]
 
     def get_queryset(self):
-        return Room.objects.prefetch_related("images").all()
+        return Room.objects.prefetch_related("images").filter(renter=None)
 
 
 class RoomViewSet(ModelViewSet):
@@ -203,9 +203,6 @@ class RoomViewSet(ModelViewSet):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-    def perform_create(self, serializer):
-        serializer.save(owner=self.request.user, is_available=True)
 
     def get_queryset(self):
         user = self.request.user

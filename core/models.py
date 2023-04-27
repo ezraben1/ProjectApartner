@@ -81,6 +81,24 @@ class ApartmentImage(models.Model):
         help_text=_("The image of the apartment."),
     )
 
+<<<<<<< HEAD
+=======
+
+class Contract(models.Model):
+    owner = models.ForeignKey(
+        CustomUser, on_delete=models.CASCADE, related_name="contracts_owned"
+    )
+    start_date = models.DateField()
+    end_date = models.DateField()
+    rent_amount = models.DecimalField(
+        max_digits=8, decimal_places=2, validators=[MinValueValidator(1)]
+    )
+    deposit_amount = models.DecimalField(
+        max_digits=8, decimal_places=2, validators=[MinValueValidator(1)]
+    )
+    terms_and_conditions = models.TextField(blank=True, null=True)
+
+>>>>>>> fd03c1a (added room and apartment delete and change, need)
 
 class Room(models.Model):
     apartment = models.ForeignKey(
@@ -94,6 +112,13 @@ class Room(models.Model):
         blank=True,
     )
     description = models.TextField(null=True, blank=True)
+<<<<<<< HEAD
+=======
+    contract = models.OneToOneField(
+        Contract, on_delete=models.SET_NULL, related_name="room", null=True, blank=True
+    )
+
+>>>>>>> fd03c1a (added room and apartment delete and change, need)
     price_per_month = models.DecimalField(
         max_digits=8, decimal_places=2, validators=[MinValueValidator(1)]
     )
@@ -116,6 +141,7 @@ class Room(models.Model):
 class RoomImage(models.Model):
     room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name="images")
     image = models.ImageField(upload_to="core/images", validators=[validate_file_size])
+<<<<<<< HEAD
 
 
 class Contract(models.Model):
@@ -132,6 +158,9 @@ class Contract(models.Model):
         max_digits=8, decimal_places=2, validators=[MinValueValidator(1)]
     )
     terms_and_conditions = models.TextField(blank=True, null=True)
+=======
+
+>>>>>>> fd03c1a (added room and apartment delete and change, need)
 
 
 class Bill(models.Model):
