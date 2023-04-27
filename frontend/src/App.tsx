@@ -29,10 +29,10 @@ function App() {
       <Router>
         <Layout currentUser={currentUser} onLoginSuccess={handleLoginSuccess}>
           <Routes>
-            <Route path="/" element={<Home currentUser={currentUser} />} />
+          <Route path="/" element={<Home currentUser={currentUser} />} />
             <Route path="/login" element={<Login onLoginSuccess={handleLoginSuccess} />} />
             <Route path="/signup" element={<SignUp />} />
-            <Route path="/test/:id" element={<PublicSingleRoom/>} />
+            <Route path="/home/:id" element={<PublicSingleRoom/>} />
 
             <Route path="/me" element={<Profile />} />
             <Route path="/owner" element={<OwnerPage />} />

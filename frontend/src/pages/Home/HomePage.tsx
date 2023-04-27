@@ -5,12 +5,16 @@ import { Room } from '../../types';
 import api from '../../utils/api';
 import { Link } from 'react-router-dom';
 
-const HomePage: React.FC = () => {
+interface HomeProps {
+  currentUser: any;
+}
+
+const HomePage: React.FC<HomeProps> = ({ }) => {
   const [rooms, setRooms] = useState<Room[]>([]);
 
   const fetchRooms = async () => {
     try {
-      const response = await api.get('/core/test/');
+      const response = await api.get('/core/feed/');
       const data = await response.json();
 
       if (Array.isArray(data.results)) {
@@ -35,7 +39,7 @@ const HomePage: React.FC = () => {
       </Heading>
       <SimpleGrid columns={[1, 2, 3]} spacing={10} px={8}>
         {rooms.map((room) => (
-          <Link to={`/test/${room.id}`} key={room.id} style={{ textDecoration: 'none' }}>
+          <Link to={`/home/${room.id}`} key={room.id} style={{ textDecoration: 'none' }}>
             <Card className="h-100 shadow-sm" style={{ width: '18rem', borderRadius: '12px' }}>
               <AspectRatio ratio={4 / 3}>
                 <Card.Img

@@ -3,6 +3,7 @@ import { Apartment, Room } from '../../types';
 import { useAuthorizedData } from '../../utils/useAuthorizedData';
 import { ListGroup } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import AddApartmentForm from './AddApartmentForm';
 
 const MyApartments: React.FC = () => {
   const [apartments, setApartments] = useState<Apartment[]>([]);
@@ -25,6 +26,8 @@ const MyApartments: React.FC = () => {
   return (
     <div>
       <h1 className="my-4">My Apartments</h1>
+      <AddApartmentForm />
+
       <ListGroup>
         {apartments.map((apartment: Apartment) => (
           <Link key={apartment.id} to={`/owner/my-apartments/${apartment.id}`}>

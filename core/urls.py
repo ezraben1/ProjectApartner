@@ -6,7 +6,7 @@ app_name = "core"
 
 custom_router = routers.DefaultRouter()
 custom_router.register("me", views.CustomUserViewSet, basename="me")
-custom_router.register("test", views.PublicRoomViewSet, basename="test")
+custom_router.register("feed", views.PublicRoomViewSet, basename="feed")
 
 urlpatterns = []
 urlpatterns += custom_router.urls
